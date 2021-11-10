@@ -74,20 +74,3 @@ const VoiceRSS = {
         } catch(e) {} throw "The browser does not support HTTP request"
     }
 };
-
-
-// To test VoiceRSS
-
-// function test() {
-//     VoiceRSS.speech({
-//         key: 'ce26fec34dd543bdbf263ae5cc2231f0',
-//         src: 'Hello World',
-//         hl: 'en-us',
-//         r: 0,
-//         c: 'mp3',
-//         f: '44khz_16bit_stereo',
-//         ssml: false,
-//     });
-// }
-
-// test();

@@ -1,6 +1,22 @@
 const button = document.getElementById('button');
 const audioElement = document.getElementById('audio');
 
+// Passing joke to VoiceRSS API
+
+function tellMe(joke) {
+    const jokeString = joke.trim().replace(/ /g, '%20');
+    //VoiceRSS Speech Parameters
+    VoiceRSS.speech({
+        key: 'ce26fec34dd543bdbf263ae5cc2231f0',
+        src: jokeString,
+        hl: 'en-us',
+        r: 0,
+        c: 'mp3',
+        f: '44khz_16bit_stereo',
+        ssml: false,
+    });
+}
+
 // Get Jokes from Joke API
 
 async function getJokes() {
@@ -14,7 +30,7 @@ async function getJokes() {
         } else {
             joke = data.joke;
         }
-        console.log(joke);
+        tellMe(joke);
     } catch (error) {
         console.log("whoops", error)
     }
