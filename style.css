@@ -48,4 +48,8 @@ html {
       background-position: center center;
       background-size: cover;
     }
+
+    button {
+      padding: 1rem;
+    }
   }
