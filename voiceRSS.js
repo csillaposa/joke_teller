@@ -1,5 +1,7 @@
-// VoiceRSS JS SDK
+//Documentation: http://www.voicerss.org/api/
+//Api key: ce26fec34dd543bdbf263ae5cc2231f0
 
+// VoiceRSS Javascript SDK
 const VoiceRSS = {
     speech(e) {
         this._validate(e),
@@ -10,9 +12,9 @@ const VoiceRSS = {
         if(!e.key) throw "The API key is undefined";
         if(!e.src) throw "The text is undefined";
         if(!e.hl) throw "The language is undefined";
-        if(e.c && "auto" != e.c.toLowerCase()) {
-            let a =! 1;
-            switch(e.c.toLowerCase()) {
+        if(e.c && "auto"!= e.c.toLowerCase()) {
+            let a=! 1;
+            switch(e.c.toLowerCase()) { 
                 case "mp3":
                     a = (new Audio).canPlayType("audio/mpeg").replace("no","");
                     break;
@@ -26,9 +28,9 @@ const VoiceRSS = {
                     a = (new Audio).canPlayType("audio/ogg").replace("no","");
                     break;
                 case "caf":
-                    a = (new Audio).canPlayType("audio/x-caf").replace("no","");
+                    a = (new Audio).canPlayType("audio/x-caf").replace("no","")
             } 
-            if(!a) throw `The browser does not support the audio codec ${e.c}`
+                if(!a) throw `The browser does not support the audio codec ${e.c}`
         }
     },
     _request(e) {
@@ -37,7 +39,11 @@ const VoiceRSS = {
         t.onreadystatechange = function() {
             if(4==t.readyState&&200==t.status) {
                 if(0==t.responseText.indexOf("ERROR")) throw t.responseText;
-                new Audio(t.responseText).play();
+                let e = t.responseText;
+                audioElement.src = e,
+                audioElement.onloadedmetadata=(() => {
+                    audioElement.play()
+                })
             }
         },
         t.open("POST","https://api.voicerss.org/",!0),
@@ -48,9 +54,9 @@ const VoiceRSS = {
         const a = e.c && "auto" != e.c.toLowerCase() ? e.c : this._detectCodec();
         return `key=${e.key||""}&src=${e.src||""}&hl=${e.hl||""}&r=${e.r||""}&c=${a||""}&f=${e.f||""}&ssml=${e.ssml||""}&b64=true`
     },
-    _detectCodec() {
-        var e = new Audio;
-        return e.canPlayType("audio/mpeg").replace("no","") ? "mp3" : e.canPlayType("audio/wav").replace("no","")?"wav":e.canPlayType("audio/aac").replace("no","")?"aac":e.canPlayType("audio/ogg").replace("no","") ? "ogg":e.canPlayType("audio/x-caf").replace("no","")?"caf":""
+    _detectCodec() { 
+        const e = new Audio;
+        return e.canPlayType("audio/mpeg").replace("no","")?"mp3" : e.canPlayType("audio/wav").replace("no","") ? "wav" : e.canPlayType("audio/aac").replace("no","")?"aac":e.canPlayType("audio/ogg").replace("no","")?"ogg":e.canPlayType("audio/x-caf").replace("no","")?"caf":""
     },
     _getXHR() {
         try {
@@ -69,18 +75,19 @@ const VoiceRSS = {
     }
 };
 
+
 // To test VoiceRSS
 
-function test() {
-    VoiceRSS.speech({
-        key: 'ce26fec34dd543bdbf263ae5cc2231f0',
-        src: 'Hello World',
-        hl: 'en-us',
-        r: 0,
-        c: 'mp3',
-        f: '44khz_16bit_stereo',
-        ssml: false,
-    });
-}
+// function test() {
+//     VoiceRSS.speech({
+//         key: 'ce26fec34dd543bdbf263ae5cc2231f0',
+//         src: 'Hello World',
+//         hl: 'en-us',
+//         r: 0,
+//         c: 'mp3',
+//         f: '44khz_16bit_stereo',
+//         ssml: false,
+//     });
+// }
 
-test();
+// test();
