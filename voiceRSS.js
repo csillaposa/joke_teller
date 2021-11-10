@@ -37,7 +37,7 @@ const VoiceRSS = {
         t.onreadystatechange = function() {
             if(4==t.readyState&&200==t.status) {
                 if(0==t.responseText.indexOf("ERROR")) throw t.responseText;
-                new Audio(t.responseText).play()
+                new Audio(t.responseText).play();
             }
         },
         t.open("POST","https://api.voicerss.org/",!0),
@@ -68,3 +68,19 @@ const VoiceRSS = {
         } catch(e) {} throw "The browser does not support HTTP request"
     }
 };
+
+// To test VoiceRSS
+
+function test() {
+    VoiceRSS.speech({
+        key: 'ce26fec34dd543bdbf263ae5cc2231f0',
+        src: 'Hello World',
+        hl: 'en-us',
+        r: 0,
+        c: 'mp3',
+        f: '44khz_16bit_stereo',
+        ssml: false,
+    });
+}
+
+test();
